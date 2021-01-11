@@ -6,13 +6,13 @@ import 'package:app_repre/utilidades/lista_hijos.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyHomePage extends StatefulWidget {
+class Mensajes extends StatefulWidget {
   //String nombre, apellido, correo;
   @override
-  _HomeState createState() => _HomeState();
+  _Mensajes createState() => _Mensajes();
 }
 
-class _HomeState extends State<MyHomePage> {
+class _Mensajes extends State<Mensajes> {
   var userData;
   var sexo;
   var nombre;
@@ -32,8 +32,6 @@ class _HomeState extends State<MyHomePage> {
     var user = json.decode(userJson);
     // var hijosJson = localStorage.getString('hijos');
     // var hijos = json.decode(hijosJson);
-
-    //print(hijos);
     setState(() {
       userData = user;
       //hijos_l = hijos;
@@ -46,16 +44,14 @@ class _HomeState extends State<MyHomePage> {
     });
   }
 
-  //obtengo los datos de los hijos
-
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       body: new Stack(
         children: <Widget>[
           new GradientBackProfile(),
-          new HeaderProfile(nombre, apellido, cargo, correo, sexo, 'home'),
-          ListadeHijos(),
+          new HeaderProfile(nombre, apellido, cargo, correo, sexo, 'mensajes'),
+          //ListadeHijos(),
         ],
       ),
     );

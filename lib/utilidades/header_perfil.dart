@@ -1,3 +1,6 @@
+import 'package:app_repre/Vistas/home.dart';
+import 'package:app_repre/Vistas/mensajes.dart';
+import 'package:app_repre/Vistas/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +10,9 @@ class HeaderProfile extends StatelessWidget {
   String cargo = 'representante';
   String correo = 'jgrs2011ec@gmail.com';
   String sexo = 'jgrs2011ec@gmail.com';
-  HeaderProfile(
-      this.nomRepre, this.apellidos, this.cargo, this.correo, this.sexo);
+  String icono = 'home';
+  HeaderProfile(this.nomRepre, this.apellidos, this.cargo, this.correo,
+      this.sexo, this.icono);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -23,7 +27,7 @@ class HeaderProfile extends StatelessWidget {
             color: Colors.white),
       ),
     );
-
+/*
     final settingIcon = Container(
       margin: EdgeInsets.only(top: 40.0, left: 20.0),
       child: Icon(
@@ -31,9 +35,12 @@ class HeaderProfile extends StatelessWidget {
         size: 15.0,
         color: Colors.white70,
       ),
-    );
+    );*/
     final encabezado = Row(
-      children: <Widget>[headerStablished, Spacer(), settingIcon],
+      children: <Widget>[
+        headerStablished,
+        Spacer() /*,settingIcon*/
+      ],
     );
     //final String path_imagen = 'assets/${sexo}.jpg';
     final photo = Container(
@@ -95,7 +102,7 @@ class HeaderProfile extends StatelessWidget {
         left: 20.0,
         top: 20.0,
       ),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white54),
       child: Icon(
         Icons.bookmark_border,
         size: 25.0,
@@ -115,26 +122,31 @@ class HeaderProfile extends StatelessWidget {
       ),
     );
 
-    final iconMas = Container(
-      width: 60.0,
-      height: 60.0,
+    final iconSchool = Container(
+      width: icono == 'home' ? 60.0 : 40.0,
+      height: icono == 'home' ? 60.0 : 40.0,
       margin: EdgeInsets.only(top: 20.0, left: 20.0),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: icono == 'home' ? Colors.white : Colors.white54),
       child: Icon(
         Icons.school,
-        size: 40.0,
+        size: icono == 'home' ? 40.0 : 25.0,
         color: Color(0xFF4F53CD),
       ),
     );
 
     final iconMail = Container(
-      width: 40.0,
-      height: 40.0,
+      width: icono == 'mensajes' ? 60.0 : 40.0,
+      height: icono == 'mensajes' ? 60.0 : 40.0,
       margin: EdgeInsets.only(top: 20.0, left: 20.0),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white54),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: icono == 'mensajes' ? Colors.white : Colors.white54,
+      ),
       child: Icon(
         Icons.mail,
-        size: 25.0,
+        size: icono == 'mensajes' ? 40.0 : 25.0,
         color: Color(0xFF4F53CD),
       ),
     );
@@ -153,11 +165,44 @@ class HeaderProfile extends StatelessWidget {
     final InteractionsIcons = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        iconSaveInsta,
-        iconGift,
-        iconMas,
-        iconMail,
-        iconProfile
+        new InkWell(
+          child: iconSaveInsta,
+          onTap: () {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text("primero"),
+            ));
+          },
+        ),
+        new InkWell(
+          child: iconGift,
+          onTap: () {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text("segundo"),
+            ));
+          },
+        ),
+        new InkWell(
+          child: iconSchool,
+          onTap: () {
+            Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => MyHomePage()));
+          },
+        ),
+        new InkWell(
+          child: iconMail,
+          onTap: () {
+            Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => Mensajes()));
+          },
+        ),
+        new InkWell(
+          child: iconProfile,
+          onTap: () {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text("quinto"),
+            ));
+          },
+        )
       ],
     );
     return Column(

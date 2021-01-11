@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app_repre/Vistas/home.dart';
 import 'package:app_repre/Vistas/login.dart';
 import 'package:app_repre/Vistas/logout.dart';
+import 'package:app_repre/Vistas/mensajes.dart';
 import 'package:app_repre/Vistas/search.dart';
 import 'package:app_repre/utilidades/api.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class PlatziTrips extends StatefulWidget {
 
 class _PlatziTrips extends State<PlatziTrips> {
   int indexTap = 0;
-  final List<Widget> widgetsChildren = [MyHomePage(), SearchTrips(), Logout()];
+  final List<Widget> widgetsChildren = [MyHomePage(), Mensajes(), Logout()];
 
   void onTapeTapped(int index) {
     if (index == 2) {

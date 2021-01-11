@@ -28,10 +28,10 @@ class CallApi {
     return '?token=$token';
   }
 
-  _getIdUsuario() async {
+  /* _getIdUsuario() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson);
     return '&id=$user["id"]';
-  }
+  }*/
 }
