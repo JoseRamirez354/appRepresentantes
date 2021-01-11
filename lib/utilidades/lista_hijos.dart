@@ -14,9 +14,9 @@ class _ListadeHijos extends State<ListadeHijos> {
   Future<dynamic> cargarHijos() async {
     var res = await CallApi().getData('hijos');
     var body = json.decode(res.body);
-    print(body);
+    //print(body);
     HijosList hijoslist = HijosList.fromJson(body);
-    print(hijoslist.hijosL);
+    //print(hijoslist.hijosL);
     //print("photos " + hijoslist.hijosL[1].nombre);
     return hijoslist.hijosL;
   }
@@ -25,7 +25,7 @@ class _ListadeHijos extends State<ListadeHijos> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      margin: EdgeInsets.only(top: 250),
+      margin: EdgeInsets.only(top: 240),
       child: new FutureBuilder<dynamic>(
         future: cargarHijos(),
         builder: (context, snapshot) {

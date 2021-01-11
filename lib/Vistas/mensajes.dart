@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app_repre/utilidades/gradiente_perfil.dart';
 import 'package:app_repre/utilidades/header_perfil.dart';
+import 'package:app_repre/utilidades/listaMensajes.dart';
 import 'package:app_repre/utilidades/lista_hijos.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,7 +52,7 @@ class _Mensajes extends State<Mensajes> {
         children: <Widget>[
           new GradientBackProfile(),
           new HeaderProfile(nombre, apellido, cargo, correo, sexo, 'mensajes'),
-          //ListadeHijos(),
+          ListaMensajes(),
         ],
       ),
     );

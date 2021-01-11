@@ -14,7 +14,7 @@ class CardHijo extends StatelessWidget {
     final card = Container(
       height: 200.0,
       width: 300.0,
-      margin: EdgeInsets.only(top: 20.0, left: 5.0, bottom: 50.0),
+      margin: EdgeInsets.only(top: 10.0, left: 5.0, bottom: 50.0),
       decoration: BoxDecoration(
           image:
               DecorationImage(fit: BoxFit.cover, image: AssetImage(pathImage)),
@@ -87,7 +87,7 @@ class CardHijo extends StatelessWidget {
     );
 
     return Stack(
-      alignment: Alignment(0.0, 0.9),
+      alignment: Alignment(0.0, 0.8),
       children: <Widget>[card, carInfoStack],
     );
 

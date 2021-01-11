@@ -82,3 +82,8 @@ flutter:
   - assets/Femenino.jpg
   - assets/est_hombre.jpg
   - assets/est_mujer.jpg
+  - assets/Docente.png
+  - assets/Representante.png
+  - assets/mensaje.png
+  - assets/Administrador.png
+  - assets/Estudiante.png
