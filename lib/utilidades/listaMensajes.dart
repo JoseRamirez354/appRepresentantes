@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app_repre/Vistas/login.dart';
 import 'package:app_repre/modelos/mensajes.dart';
 import 'package:flutter/material.dart';
 import '../modelos/modeloMensaje.dart';
@@ -14,18 +15,19 @@ class _ListaMensajes extends State<ListaMensajes> {
   Future<dynamic> cargarMensajes() async {
     var res = await CallApi().getData('mensajes');
     var body2 = json.decode(res.body);
-    print(body2['mensajes']);
-    MensajesList mensajeslista = MensajesList.fromJson(body2['mensajes']);
-    print("photos " + mensajeslista.mensajesL[1].razon);
-    //print("photos " + hijoslist.hijosL[1].nombre);
-    return mensajeslista.mensajesL;
+    if (body2['success']) {
+      MensajesList mensajeslista = MensajesList.fromJson(body2['mensajes']);
+      return mensajeslista.mensajesL;
+    } else {
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => LoginPage()));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
-      margin: EdgeInsets.only(top: 265),
+      margin: EdgeInsets.only(top: 280),
       child: new FutureBuilder<dynamic>(
         future: cargarMensajes(),
         builder: (context, snapshot) {

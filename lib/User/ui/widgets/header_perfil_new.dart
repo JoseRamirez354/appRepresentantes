@@ -1,32 +1,25 @@
+import 'package:app_repre/User/ui/screen/editar_usuario.dart';
 import 'package:app_repre/User/ui/widgets/user_info.dart';
 import 'package:app_repre/Vistas/home.dart';
 import 'package:app_repre/Vistas/mensajes.dart';
 import 'package:app_repre/User/model/user.dart';
+import 'package:app_repre/Vistas/newMensajes.dart';
+import 'package:app_repre/utilidades/button_green.dart';
 import 'package:app_repre/utilidades/menu_principal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'botonPeriodoL.dart';
-import 'button_green.dart';
-
-class HeaderProfile extends StatelessWidget {
+class HeaderProfileNew extends StatelessWidget {
   User user;
-  String nomRepre = 'jose';
-  String apellidos = 'ramirez';
-  String cargo = 'representante';
-  String correo = 'jgrs2011ec@gmail.com';
-  String sexo = 'jgrs2011ec@gmail.com';
   String icono = 'home';
-  String periodoN = '2000';
-  HeaderProfile(this.nomRepre, this.apellidos, this.cargo, this.correo,
-      this.sexo, this.icono, this.periodoN);
+  HeaderProfileNew(this.user, this.icono);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     final headerStablished = Container(
       margin: EdgeInsets.only(top: 40.0, left: 20.0),
       child: Text(
-        "${cargo}",
+        user.cargo,
         style: TextStyle(
             fontFamily: "Monse",
             fontSize: 25.0,
@@ -41,7 +34,7 @@ class HeaderProfile extends StatelessWidget {
         Spacer(),
         Container(
           child: ButtonGreen(
-            text: "${periodoN}",
+            text: "2020-2021",
             onPressed: () {},
             width: 100.0,
             height: 30.0,
@@ -63,7 +56,7 @@ class HeaderProfile extends StatelessWidget {
         shape: BoxShape.circle,
         image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(sexo == 'Femenino'
+            image: AssetImage(user.sexo == 'Femenino'
                 ? 'assets/Femenino.jpg'
                 : 'assets/Masculino.jpg')),
       ),
@@ -71,7 +64,7 @@ class HeaderProfile extends StatelessWidget {
     final userName = Container(
       margin: EdgeInsets.only(top: 15.0, left: 20.0),
       child: Text(
-        "${nomRepre}",
+        user.nombre,
         textAlign: TextAlign.left,
         style:
             TextStyle(fontFamily: "Monse", fontSize: 18.0, color: Colors.white),
@@ -80,7 +73,7 @@ class HeaderProfile extends StatelessWidget {
     final userApellido = Container(
       margin: EdgeInsets.only(top: 15.0, left: 20.0),
       child: Text(
-        "${apellidos}",
+        user.apellido,
         textAlign: TextAlign.left,
         style:
             TextStyle(fontFamily: "Monse", fontSize: 18.0, color: Colors.white),
@@ -90,7 +83,7 @@ class HeaderProfile extends StatelessWidget {
       margin: EdgeInsets.only(top: 20.0, left: 20.0),
       child: Text(
         //"jgrs2011ec@gmail.com",
-        '${correo}',
+        user.email,
         textAlign: TextAlign.left,
         style: TextStyle(
             fontFamily: "Monse", fontSize: 16.0, color: Colors.white70),
@@ -146,13 +139,16 @@ class HeaderProfile extends StatelessWidget {
     );
 
     final iconProfile = Container(
-      width: 40.0,
-      height: 40.0,
-      margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white54),
+      width: icono == 'perfil' ? 60.0 : 40.0,
+      height: icono == 'perfil' ? 60.0 : 40.0,
+      margin: EdgeInsets.only(top: 20.0, left: 20.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: icono == 'perfil' ? Colors.white : Colors.white54,
+      ),
       child: Icon(
         Icons.person,
-        size: 25.0,
+        size: icono == 'perfil' ? 40.0 : 25.0,
         color: Color(0xFF4F53CD),
       ),
     );
@@ -170,8 +166,10 @@ class HeaderProfile extends StatelessWidget {
         new InkWell(
           child: iconSchool,
           onTap: () {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => MyHomePage()));
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (PlatziTripsCupertino) => MyHomePage()));
           },
         ),
         new InkWell(
@@ -180,15 +178,20 @@ class HeaderProfile extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (PlatziTripsCupertino) => Mensajes()));
+                    builder: (context) => NewMensajes(
+                          user: user,
+                        )));
           },
         ),
         new InkWell(
           child: iconProfile,
           onTap: () {
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(user.id),
-            ));
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => EditarUsuario(
+                          user: user,
+                        )));
           },
         )
       ],

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app_repre/Vistas/login.dart';
 import 'package:app_repre/modelos/hijos.dart';
 import 'package:app_repre/utilidades/api.dart';
 import 'package:app_repre/utilidades/card_hijo.dart';
@@ -14,18 +15,22 @@ class _ListadeHijos extends State<ListadeHijos> {
   Future<dynamic> cargarHijos() async {
     var res = await CallApi().getData('hijos');
     var body = json.decode(res.body);
-    //print(body);
-    HijosList hijoslist = HijosList.fromJson(body);
-    //print(hijoslist.hijosL);
-    //print("photos " + hijoslist.hijosL[1].nombre);
-    return hijoslist.hijosL;
+    if (body['success']) {
+      //print(body);
+      HijosList hijoslist = HijosList.fromJson(body['hijos']);
+      //print(body['hijos']);
+      return hijoslist.hijosL;
+    } else {
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => LoginPage()));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      margin: EdgeInsets.only(top: 240),
+      margin: EdgeInsets.only(top: 270),
       child: new FutureBuilder<dynamic>(
         future: cargarHijos(),
         builder: (context, snapshot) {
@@ -43,7 +48,13 @@ class _ListadeHijos extends State<ListadeHijos> {
                                 : "assets/est_hombre.jpg",
                             snapshot.data[index].nombre,
                             snapshot.data[index].apellido,
-                            snapshot.data[index].seccion),
+                            snapshot.data[index].seccion,
+                            snapshot.data[index].paralelo != null
+                                ? snapshot.data[index].paralelo
+                                : '',
+                            snapshot.data[index].especializacion != null
+                                ? snapshot.data[index].especializacion
+                                : ''),
                       );
                     },
                   ),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:app_repre/User/model/user.dart';
+import 'package:app_repre/utilidades/gradient_back.dart';
 import 'package:app_repre/utilidades/gradiente_perfil.dart';
 import 'package:app_repre/utilidades/header_perfil.dart';
 import 'package:app_repre/utilidades/lista_hijos.dart';
@@ -14,6 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _HomeState extends State<MyHomePage> {
   var userData;
+  var periodoNombre;
   var sexo;
   var nombre;
   var apellido;
@@ -30,19 +33,18 @@ class _HomeState extends State<MyHomePage> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson);
-    // var hijosJson = localStorage.getString('hijos');
-    // var hijos = json.decode(hijosJson);
+    var periodo = localStorage.getString('periodo');
+    var pL = json.decode(periodo);
 
     //print(hijos);
     setState(() {
       userData = user;
-      //hijos_l = hijos;
-      //sexo = 'assets/Femenino.jpg';
       nombre = userData['nombres'];
       apellido = userData['apellidos'];
       correo = userData['correo'];
       cargo = userData['cargo'];
       sexo = userData['sexo'];
+      periodoNombre = pL['nombre'];
     });
   }
 
@@ -53,8 +55,9 @@ class _HomeState extends State<MyHomePage> {
     return Scaffold(
       body: new Stack(
         children: <Widget>[
-          new GradientBackProfile(),
-          new HeaderProfile(nombre, apellido, cargo, correo, sexo, 'home'),
+          GradientBack(heigth: 300),
+          new HeaderProfile(
+              nombre, apellido, cargo, correo, sexo, 'home', periodoNombre),
           ListadeHijos(),
         ],
       ),

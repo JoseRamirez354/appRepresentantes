@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:app_repre/User/bloc/bloc_user.dart';
+import 'package:app_repre/User/model/user.dart';
 import 'package:app_repre/utilidades/api.dart';
 import 'package:app_repre/utilidades/menu_inferior.dart';
+import 'package:app_repre/utilidades/menu_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +16,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
+  UserBloc userBloc;
+  double screenWhiht;
 
   TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -30,140 +36,9 @@ class _LoginPageState extends State<LoginPage> {
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
-/*
-  @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
-        .copyWith(statusBarColor: Colors.transparent));
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.blue, Colors.teal],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter),
-        ),
-        child: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : ListView(
-                children: <Widget>[
-                  headerSection(),
-                  textSection(),
-                  buttonSection(),
-                ],
-              ),
-      ),
-    );
-  }
-
-  signIn(String email, pass) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {'email': email, 'password': pass};
-    var jsonResponse = null;
-    var response = await http.post(
-        "http://192.168.100.34:80/representantesapp/public/api/login",
-        body: data);
-    var body = json.decode(response.body);
-    if (response.statusCode == 200) {
-      jsonResponse = json.decode(response.body);
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      if (jsonResponse != null) {
-        setState(() {
-          _isLoading = false;
-        });
-        sharedPreferences.setString("token", jsonResponse['token']);
-        sharedPreferences.setString('user', json.encode(body['user']));
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => PlatziTrips()),
-            (Route<dynamic> route) => false);
-      }
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('${body['message']}'),
-      ));
-      print(response.body);
-    }
-  }
-
-  Container buttonSection() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 40.0,
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
-      margin: EdgeInsets.only(top: 15.0),
-      child: RaisedButton(
-        onPressed: emailController.text == "" || passwordController.text == ""
-            ? null
-            : () {
-                setState(() {
-                  _isLoading = true;
-                });
-                signIn(emailController.text, passwordController.text);
-              },
-        elevation: 0.0,
-        color: Colors.purple,
-        child: Text("Sign In", style: TextStyle(color: Colors.white70)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-      ),
-    );
-  }
-
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
-
-  Container textSection() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-      child: Column(
-        children: <Widget>[
-          TextFormField(
-            controller: emailController,
-            cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
-            decoration: InputDecoration(
-              icon: Icon(Icons.email, color: Colors.white70),
-              hintText: "Email",
-              border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70)),
-              hintStyle: TextStyle(color: Colors.white70),
-            ),
-          ),
-          SizedBox(height: 30.0),
-          TextFormField(
-            controller: passwordController,
-            cursorColor: Colors.white,
-            obscureText: true,
-            style: TextStyle(color: Colors.white70),
-            decoration: InputDecoration(
-              icon: Icon(Icons.lock, color: Colors.white70),
-              hintText: "Password",
-              border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70)),
-              hintStyle: TextStyle(color: Colors.white70),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container headerSection() {
-    return Container(
-      margin: EdgeInsets.only(top: 50.0),
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-      child: Text("Codigo Alpha Flutter",
-          style: TextStyle(
-              color: Colors.white70,
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold)),
-    );
-  }
-}*/
-  Widget build(BuildContext context) {
+    screenWhiht = MediaQuery.of(context).size.width;
+    userBloc = BlocProvider.of(context);
     return Scaffold(
       body: Container(
         child: Stack(
@@ -272,29 +147,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-
-                    ////////////   new account///////////////
-                    /*  Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => SignUp()));
-                        },
-                        child: Text(
-                          'Create new Account',
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ),
-                    ),*/
                   ],
                 ),
               ),
@@ -305,42 +157,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-/*
-  void _login() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {
-      'email': mailController.text,
-      'password': passwordController.text
-    };
-    var jsonResponse = null;
-    var response = await http.post(
-        "http://192.168.100.34:80/representantesapp/public/api/login",
-        body: data);
-    var body = json.decode(response.body);
-    if (response.statusCode == 200) {
-      if (jsonResponse != null) {
-        setState(() {
-          _isLoading = false;
-        });
-        sharedPreferences.setString("token", body['token']);
-        sharedPreferences.setString('user', json.encode(body['user']));
-
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => PlatziTrips()),
-            (Route<dynamic> route) => false);
-      }
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('${body['message']}'),
-      ));
-      print(response.body);
-    }
-  }
-}
-*/
   void _login() async {
     setState(() {
       _isLoading = true;
@@ -357,10 +173,10 @@ class _LoginPageState extends State<LoginPage> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
-      localStorage.setString('hijos', json.encode(body['hijos']));
-      print(res.body);
-      Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => PlatziTrips()));
+      localStorage.setString('periodo', json.encode(body['periodo']));
+      print(json.encode(body['periodo']));
+      Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => PlatziTripsCupertino()));
     } else {
       _showMsg(body['message']);
     }

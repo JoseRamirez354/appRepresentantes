@@ -27,7 +27,7 @@ class _Logout extends State<Logout> {
     // logout from the server ...
     var res = await CallApi().getData('logout');
     var body = json.decode(res.body);
-    //print(body);
+    print(body);
     if (body['success']) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.remove('user');

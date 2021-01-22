@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:app_repre/User/bloc/bloc_user.dart';
+import 'package:app_repre/utilidades/gradient_back.dart';
 import 'package:app_repre/utilidades/gradiente_perfil.dart';
 import 'package:app_repre/utilidades/header_perfil.dart';
 import 'package:app_repre/utilidades/listaMensajes.dart';
 import 'package:app_repre/utilidades/lista_hijos.dart';
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Mensajes extends StatefulWidget {
@@ -20,6 +23,7 @@ class _Mensajes extends State<Mensajes> {
   var apellido;
   var correo;
   var cargo;
+  var periodoNombre;
 
   @override
   void initState() {
@@ -31,27 +35,28 @@ class _Mensajes extends State<Mensajes> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson);
-    // var hijosJson = localStorage.getString('hijos');
-    // var hijos = json.decode(hijosJson);
+    var periodo = localStorage.getString('periodo');
+    var pL = json.decode(periodo);
     setState(() {
       userData = user;
-      //hijos_l = hijos;
-      //sexo = 'assets/Femenino.jpg';
       nombre = userData['nombres'];
       apellido = userData['apellidos'];
       correo = userData['correo'];
       cargo = userData['cargo'];
       sexo = userData['sexo'];
+      periodoNombre = pL['nombre'];
     });
   }
 
   Widget build(BuildContext context) {
+    UserBloc userBloc = BlocProvider.of<UserBloc>(context);
     // TODO: implement build
     return Scaffold(
       body: new Stack(
         children: <Widget>[
-          new GradientBackProfile(),
-          new HeaderProfile(nombre, apellido, cargo, correo, sexo, 'mensajes'),
+          GradientBack(heigth: 300),
+          new HeaderProfile(
+              nombre, apellido, cargo, correo, sexo, 'mensajes', periodoNombre),
           ListaMensajes(),
         ],
       ),

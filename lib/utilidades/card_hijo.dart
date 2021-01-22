@@ -6,8 +6,11 @@ class CardHijo extends StatelessWidget {
   String pathImage = "assets/est_hombre.jpg";
   String nombre = "Jose Ramirez";
   String apellido = "RAMIREZ sanchez";
-  String curso = "Segundo grado educación basica paralelo A";
-  CardHijo(this.pathImage, this.nombre, this.apellido, this.curso);
+  String curso = "Segundo ";
+  String paralelo = "A";
+  String especializacion = "Ciencias";
+  CardHijo(this.pathImage, this.nombre, this.apellido, this.curso,
+      this.paralelo, this.especializacion);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,7 +39,7 @@ class CardHijo extends StatelessWidget {
             fontFamily: "Monse", fontSize: 16.0, fontWeight: FontWeight.bold),
       ),
     );
-    final nombreGrado = Container(
+    final apellidoHijo = Container(
       width: 170.0,
       margin: new EdgeInsets.only(top: 2.0, left: 15.0),
       child: new Text(
@@ -48,7 +51,7 @@ class CardHijo extends StatelessWidget {
     final Curso = Container(
       margin: new EdgeInsets.only(top: 5.0, left: 15.0),
       child: new Text(
-        curso,
+        curso + ' ' + paralelo + ' ' + especializacion,
         style: const TextStyle(
             fontFamily: "Monse",
             fontSize: 15.0,
@@ -58,7 +61,7 @@ class CardHijo extends StatelessWidget {
     );
     final infoContent = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[nombreHijo, nombreGrado, Curso],
+      children: <Widget>[nombreHijo, apellidoHijo, Curso],
     );
     final cardInfo = Container(
       height: 95.0,
